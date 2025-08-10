@@ -1,0 +1,6 @@
+com\example\pages\BasePage.class
+com\example\pages\LoginPage.class
+com\example\config\ConfigReader.class
+com\example\utils\LocatorLoader.class
+com\example\pages\HomePage.class
+com\example\config\DriverFactory.class
