@@ -9,33 +9,29 @@ import org.openqa.selenium.WebElement;
 import com.example.utils.LocatorLoader; 
 
 public class LoginPage extends BasePage {
-    private WebElement usernameInput;
-    private WebElement passwordInput;
-    private WebElement loginBtn;
     private final Map<String, String> locators;
 
     public LoginPage(WebDriver driver) {
         super(driver);
         this.locators = LocatorLoader.getLocators("LoginPage");
     }
+        private By getLocator(String key) {
+        return By.xpath(locators.get(key));
+    }
+
+    public void login(String username, String password) {
+        waitForElement(getLocator("usernameInput")).sendKeys(username);
+        waitForElement(getLocator("passwordInput")).sendKeys(password);
+        waitForElement(getLocator("loginBtn")).click();
+    }
 
     public void waitForLoginPageLoaded() {
         waitForUrlContains("login");
     }
 
-    public void login(String username, String password) {
-        usernameInput.sendKeys(username);
-        passwordInput.sendKeys(password);
-        loginBtn.click();
-    }
-
     public boolean areLoginElementsVisible() {
-        usernameInput = waitForElement(By.xpath(locators.get("usernameInput")));
-        passwordInput = waitForElement(By.xpath(locators.get("passwordInput")));
-        loginBtn = waitForElement(By.xpath(locators.get("loginBtn")));
-
-        return usernameInput.isDisplayed()
-                && passwordInput.isDisplayed()
-                && loginBtn.isDisplayed();
+        return waitForElement(getLocator("usernameInput")).isDisplayed()
+            && waitForElement(getLocator("passwordInput")).isDisplayed()
+            && waitForElement(getLocator("loginBtn")).isDisplayed();
     }
 }
